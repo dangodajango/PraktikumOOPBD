@@ -1,14 +1,16 @@
 package uni.plovdiv.database.application.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+@Entity
+@Getter
+@Setter
 public class CategoryModel {
 
     @Id

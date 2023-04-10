@@ -1,10 +1,6 @@
 package uni.plovdiv.database.application.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,6 +25,6 @@ public class BrandModel {
     @Column(name = "Location", nullable = false)
     private String location;
 
-    @ManyToMany(mappedBy = "brands")
+    @OneToMany(mappedBy = "brands")
     private List<ShoeModel> shoes;
 }

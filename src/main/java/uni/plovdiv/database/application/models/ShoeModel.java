@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
@@ -35,7 +36,7 @@ public class ShoeModel {
             joinColumns = @JoinColumn(name = "shoe_id"),
             inverseJoinColumns = @JoinColumn(name = "brand_id")
     )
-    private List<BrandModel> brands;
+    private BrandModel brands;
 
     @ManyToMany
     @JoinTable(

@@ -1,12 +1,6 @@
 package uni.plovdiv.database.application.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,9 +29,9 @@ public class ShoeModel {
     @Column(name = "Image URL")
     private String URL;
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(
-            name = "shoes_brands",
+            name = "shoe_brand",
             joinColumns = @JoinColumn(name = "shoe_id"),
             inverseJoinColumns = @JoinColumn(name = "brand_id")
     )

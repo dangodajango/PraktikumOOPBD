@@ -3,28 +3,27 @@ package uni.plovdiv.database.application.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@Table
 @Getter
 @Setter
-@ToString
-public class BrandModel {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = SEQUENCE)
     private Long id;
 
-    @Column(name = "Name", nullable = false)
-    private String name;
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "Location", nullable = false)
-    private String location;
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @OneToMany(mappedBy = "brands")
-    private List<ShoeModel> shoes;
+    @ManyToMany(mappedBy = "categories")
+    private List<Shoe> shoes;
 }

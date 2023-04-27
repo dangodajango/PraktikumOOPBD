@@ -12,7 +12,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
 @Getter
 @Setter
-public class ShoeModel {
+public class Shoe {
 
     @Id
     @GeneratedValue(strategy = SEQUENCE)
@@ -21,13 +21,13 @@ public class ShoeModel {
     @Column(nullable = false)
     private String title;
 
-    @Column(name = "Release year")
+    @Column(name = "release_year")
     private short releaseYear;
 
-    @Column(name = "Price")
+    @Column(name = "price")
     private short price;
 
-    @Column(name = "Image URL")
+    @Column(name = "image_url")
     private String URL;
 
     @ManyToOne
@@ -36,7 +36,7 @@ public class ShoeModel {
             joinColumns = @JoinColumn(name = "shoe_id"),
             inverseJoinColumns = @JoinColumn(name = "brand_id")
     )
-    private BrandModel brands;
+    private Brand brands;
 
     @ManyToMany
     @JoinTable(
@@ -44,5 +44,5 @@ public class ShoeModel {
             joinColumns = @JoinColumn(name = "shoe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private List<CategoryModel> categories;
+    private List<Category> categories;
 }

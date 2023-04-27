@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uni.plovdiv.database.application.models.ShoeModel;
+import uni.plovdiv.database.application.models.Shoe;
 
 @Repository
-public interface ShoeRepository extends JpaRepository<ShoeModel, Long> {
+public interface ShoeRepository extends JpaRepository<Shoe, Long> {
 
     @Modifying
     @Transactional

@@ -11,18 +11,18 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
 @Getter
 @Setter
-public class CategoryModel {
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = SEQUENCE)
     private Long id;
 
-    @Column(name = "Title", nullable = false)
-    private String title;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "Description", nullable = false)
-    private String description;
+    @Column(name = "location", nullable = false)
+    private String location;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<ShoeModel> shoes;
+    @OneToMany(mappedBy = "brands")
+    private List<Shoe> shoes;
 }

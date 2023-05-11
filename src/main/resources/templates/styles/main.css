@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: 17px Verdana, Arial, Tahoma, sans-serif;
+  padding: 1rem;
+}
+
+button, input {
+  font-family: Verdana, Arial, Tahoma, sans-serif !important;
+}
+
+#header {
+  display: flex;
+  align-items: baseline;
+}
+
+#header > a {
+  text-decoration: none;
+}
+
+#header > a:visited{
+  color: black !important;
+}
+
+h2{
+  color: #888;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+#filters {
+  display: flex;
+  padding: 1rem;
+  background-color: #ccc;
+  margin: 1rem 0;
+  justify-content: baseline;
+}
+
+#filters > label {
+  margin: 0 1rem;
+}
+
+
+h2:hover{
+  color: #333;
+}
+
+#paging{
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1rem;
+}
+
+#paging > * {
+  margin: 0 1rem;
+}
+
+#paging > a {
+  display: block;
+  margin: 0 auto 0 0 !important;
+}
+
+#paginator {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.paginatorItem {
+  margin: 0.25rem;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.paginatorItem:hover {
+  background-color: #ccc;
+}
+
+label {
+  display: flex !important;
+  margin: 0.75rem 0;
+  color: #333;
+  flex-wrap: wrap;
+}
+
+input, select:not([multiple]) {
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.1rem;
+  margin: 0.3rem 0;
+  display: block;
+  height: 1.7rem;
+  outline: none;
+}
+
+select[multiple]{
+  height: auto;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.1rem;
+  margin: 0.3rem 0;
+}
+
+select[multiple] > option{
+  font-size: 1rem;
+  padding: 0.1rem;
+}
+
+input[type="text"], select {
+  display: block;
+  flex-grow: 1;
+  width: 100%;
+}
+
+input[type="number"] {
+  margin: 0 1rem;
+  width: 5rem;
+}
+
+input[type="checkbox"] {
+  margin: 0 0.5rem 0 2rem;
+  width: 1rem;
+}
+
+button {
+  font-size: 1rem;
+  background-color: #ccc;
+  border: 0px;
+  padding: 0.75rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 0.2rem;
+}
+
+.error {
+  display: none;
+  color: red;
+}

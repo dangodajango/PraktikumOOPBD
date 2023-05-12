@@ -9,5 +9,8 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create
+    mvc:
+      view:
+        suffix: .html
   h2:
     console.enabled: true

@@ -38,6 +38,14 @@
 
 </div>
 
+<div class="categoryItem" th:each="category: ${categories}" th:id="${category.id}">
+    <div th:text="${category.title}"></div>
+    <div>
+        <button class="edit" th:id="${category.id}">Edit</button>
+        <button class="delete">Delete</button>
+    </div>
+</div>
+
 <!--Js-->
 <script type="module" src="./categories.js"></script>
 

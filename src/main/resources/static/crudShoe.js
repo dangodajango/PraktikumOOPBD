@@ -1,7 +1,8 @@
 import { getBrandsDropdown } from "./scripts/brandsHelper.js";
 import { getCategoriesDropdown } from "./scripts/categoriesHelper.js";
-import { showErrors } from "./scripts/formsHelper.js";
-import { getShoeById, renderShoeDetails } from "./scripts/shoesHelper.js";
+import { deleteOnClick, showErrors } from "./scripts/formsHelper.js";
+import { renderShoeDetails } from "./scripts/shoesHelper.js";
+import { deleteConfirmed, get, handleError, post, put } from "./scripts/httpService.js";
 
 const id = new URLSearchParams(window.location.search).get('id');
 
@@ -17,16 +18,15 @@ const brandsDropdown = document.getElementById("brandsDropdown");
 
 const defaultImg = 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
 
-
 imageURL.addEventListener("input", () => {
   console.log(imageURL)
   imagePreview.style.backgroundImage = `url(${imageURL.value})` ?? defaultImg;
 })
 
-
 if(id){
 
-  const shoe = getShoeById(id);
+  const response = await get('/shoes/' + id);
+  const shoe = (await response.json()).data;
 
   console.log('fetched shoe', shoe);
   
@@ -40,6 +40,11 @@ if(id){
     document.getElementById("editShoe").style.display = 'block';
   });
 
+  document.getElementById("deleteShoe").addEventListener("click", () => deleteOnClick(id, () => {
+    deleteConfirmed(`/shoes/${id}`).then((response) => {
+      redirectToShoes();
+    }, handleError)
+  }))
 
   /* Edit shoe */
 
@@ -75,7 +80,7 @@ else {
 }
 
 const redirectToShoes = () => {
-  window.location.href = 'index.html';
+  window.location.href = 'index';
 }
 
 const validate = (data) => {
@@ -118,7 +123,16 @@ document.getElementById("save").addEventListener("click", () => {
   const isValid = validate(newShoeData);
   console.log('is valid:', isValid);
   if(isValid){
-    // redirectToShoes();
+    if(id){
+      put("/shoes/" + id, newShoeData).then((data) => {
+        redirectToShoes();
+      }, handleError)
+    }
+    else {
+      post("/shoes", newShoeData).then((data) => {
+        redirectToShoes();
+      }, handleError)
+    }
   }
 });
 

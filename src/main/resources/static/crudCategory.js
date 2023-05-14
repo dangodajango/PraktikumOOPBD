@@ -1,12 +1,12 @@
-import { getCategoryById } from "./scripts/categoriesHelper.js";
+import { get, handleError, post, put } from "./scripts/httpService.js";
 import { showErrors } from "./scripts/formsHelper.js";
-
 
 const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
 
-  const category = getCategoryById(id);
+  const response = await get('/categories/' + id);
+  const category = (await response.json()).data;
 
   console.log('fetched category', category);
 
@@ -18,7 +18,7 @@ else {
 }
 
 const redirectToCategories = () => {
-  window.location.href = 'categories.html';
+  window.location.href = 'categories';
 }
 
 const validate = (data) => {
@@ -29,7 +29,6 @@ const validate = (data) => {
   showErrors(errors);
   return errors.length === 0;
 }
-
 
 document.getElementById("save").addEventListener("click", () => {
   const newCategoryData = {
@@ -42,7 +41,16 @@ document.getElementById("save").addEventListener("click", () => {
   const isValid = validate(newCategoryData);
   console.log('is valid:', isValid);
   if(isValid){
-    // redirectToCategories();
+    if(id){
+        put("/categories/" + id, newCategoryData).then((data) => {
+            redirectToCategories();
+          }, handleError)
+        }
+    else {
+      post("/categories", newCategoryData).then((data) => {
+        redirectToCategories();
+      }, handleError)
+    }
   }
 });
 

@@ -1,11 +1,12 @@
-import { getBrandById } from "./scripts/brandsHelper.js";
+import { get, handleError, post, put } from "./scripts/httpService.js";
 import { showErrors } from "./scripts/formsHelper.js";
 
 const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
-  const brand = getBrandById(id);
 
+  const response = await get('/brands/' + id);
+  const brand = (await response.json()).data;
   console.log('fetched brand', brand);
 
   document.getElementById("name").value = brand.name;
@@ -16,13 +17,13 @@ else {
 }
 
 const redirectToBrands = () => {
-  window.location.href = 'brands.html';
+  window.location.href = 'brands';
 }
 
 const validate = (data) => {
   const errors = [];
-  if(data.name.length < 5) errors.push('name');
-  if(data.description.length < 5) errors.push('description');
+  if(data.name.length === 0 || data.name.length > 100) errors.push('name');
+  if(data.description.length < 5 || data.description.length > 100) errors.push('description');
 
   showErrors(errors);
   return errors.length === 0;
@@ -38,7 +39,16 @@ document.getElementById("save").addEventListener("click", () => {
   const isValid = validate(newBrandData);
   console.log('is valid:', isValid);
   if(isValid){
-    // redirectToBrands();
+    if(id){
+      put("/brands/" + id, newBrandData).then((data) => {
+        redirectToBrands();
+      }, handleError)
+    }
+    else {
+      post("/brands", newBrandData).then((data) => {
+        redirectToBrands();
+      }, handleError)
+    }
   }
 });
 

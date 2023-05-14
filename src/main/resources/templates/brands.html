@@ -1,44 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles/main.css">
-  <link rel="stylesheet" href="./styles/brands.css">
-  <title>The Shoe base</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/styles/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/brands.css}">
+    <title>The Shoe base</title>
 </head>
 <body>
-  
-  <div id="header">
-    <a href="index.html"><h2> Available shoes </h2></a>
-    <a href="categories.html"><h2> Categories </h2></a>
-    <h1>Brands</h1>
-  </div>
 
-  <div id="filters">
+<div id="header">
+    <a th:href="index"><h2> Available shoes </h2></a>
+    <a th:href="categories"><h2> Categories </h2></a>
+    <h1>Brands</h1>
+</div>
+
+<div id="filters">
 
     <label> Name
-      <input type="text" id="name" />
+        <input type="text" id="name"/>
     </label>
 
     <button id="applyFilters">Apply</button>
 
-  </div>
-  
-  <a href="brand.html"><button id="create">Create brand</button></a>
+</div>
 
-  <div id="brandsList">
+<div class="d-f">
+    <a th:href="brand">
+        <button id="create">Create brand</button>
+    </a>
+    <div><span id="resultsCount">0</span> items found</div>
+</div>
 
-    <div id="noResults">
-      No brands found
-    </div>
+<div id="brandsList">
 
-  </div>
+</div>
+
+<div id="noResults">
+    No brands found
+</div>
 
 
-  <!--Js-->
-  <script type="module" src="./brands.js"></script>
+<!--Js-->
+<script type="module" src="./brands.js"></script>
 
 </body>
 </html>

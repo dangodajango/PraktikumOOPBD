@@ -1,17 +1,17 @@
 
-#categoriesList {
+#brandsList {
   margin-top: 1rem;
 }
 
-.categoryItem{
+.brandItem{
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 500px;
+  max-width: 600px;
   border-bottom: 1px solid #ccc;
 }
 
-#editCategory {
-  width: 500px;
+#editBrand {
+  width: 600px;
 }

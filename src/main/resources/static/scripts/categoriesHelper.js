@@ -4,23 +4,35 @@ const mockCategories = [
   {id: '3', name: 'Elegant', description: 'For a formal dinner'}
 ]
 
-const getCategoriesList = () => {
+import { getUrlWithParams } from "./filtersHelper.js";
+import { get } from "./httpService.js";
+import { setResultsCount } from "./paginatorHelper.js";
 
-  let categoryItems = '';
+const getCategoriesList = (filters = {}) => {
 
-  for(let i = 0; i < mockCategories.length; i++){
-    categoryItems += renderCategoryItem(mockCategories[i])
-  }
-  
-  document.getElementById("categoriesList").innerHTML = categoryItems;
+  const urlWithParams = getUrlWithParams('/categories', filters);
 
-  const editButtons = document.getElementsByClassName("edit");
+  get(urlWithParams).then(async (response) => {
+    const reponseJSON = (await response.json());
+    const categories = reponseJSON.data;
 
-  for(let i = 0; i < editButtons.length; i++) {
-    editButtons[i].addEventListener("click", () => {
-      window.location.href = "category.html?id=" + editButtons[i].getAttribute('id');
-    })
-  }
+      let categoryItems = '';
+
+      for(let i = 0; i < categories.length; i++){
+        categoryItems += renderCategoryItem(categories[i])
+      }
+
+      document.getElementById("categoriesList").innerHTML = categoryItems;
+
+      const editButtons = document.getElementsByClassName("edit");
+
+      for(let i = 0; i < editButtons.length; i++) {
+        editButtons[i].addEventListener("click", () => {
+          window.location.href = "category.html?id=" + editButtons[i].getAttribute('id');
+        })
+      }
+        setResultsCount(categories.length);
+    });
 }
 
 const getCategoriesDropdown = () => {

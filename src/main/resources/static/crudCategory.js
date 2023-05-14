@@ -1,12 +1,14 @@
 import { getCategoryById } from "./scripts/categoriesHelper.js";
 import { showErrors } from "./scripts/formsHelper.js";
+import { get } from "./scripts/httpService.js";
 
 
 const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
 
-  const category = getCategoryById(id);
+  const response = await get('/categories/' + id);
+  const category = (await response.json()).data;
 
   console.log('fetched category', category);
 

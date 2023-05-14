@@ -17,10 +17,13 @@ const getBrandsList = (filters = {}) => {
 
   get(urlWithParams).then(async (response) => {
     const reponseJSON = (await response.json());
-    const shoes = reponseJSON.data;
-    const count = reponseJSON.count;
+    const brands = reponseJSON.data;
 
-    renderShoeItems(shoes);
+  for(let i = 0; i < brands.length; i++){
+    brandItems += renderBrandItem(brands[i])
+  }
+
+  document.getElementById("brandsList").innerHTML = brandItems;
 
     brandItems = document.getElementsByClassName("brandItem");
 
@@ -29,7 +32,7 @@ const getBrandsList = (filters = {}) => {
         window.location.href = "brand.html?id=" + brandItems[i].getAttribute("data-id");
       })
     }
-    setResultsCount(count);
+    setResultsCount(brands.length);
   });
 }
 

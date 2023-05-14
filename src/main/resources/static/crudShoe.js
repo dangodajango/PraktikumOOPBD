@@ -1,7 +1,8 @@
 import { getBrandsDropdown } from "./scripts/brandsHelper.js";
 import { getCategoriesDropdown } from "./scripts/categoriesHelper.js";
 import { showErrors } from "./scripts/formsHelper.js";
-import { getShoeById, renderShoeDetails } from "./scripts/shoesHelper.js";
+import { renderShoeDetails } from "./scripts/shoesHelper.js";
+import { get } from "./scripts/httpService.js";
 
 const id = new URLSearchParams(window.location.search).get('id');
 
@@ -26,7 +27,8 @@ imageURL.addEventListener("input", () => {
 
 if(id){
 
-  const shoe = getShoeById(id);
+  const response = await get('/shoes/' + id);
+  const shoe = (await response.json()).data;
 
   console.log('fetched shoe', shoe);
   

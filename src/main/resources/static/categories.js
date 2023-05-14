@@ -1,5 +1,7 @@
 import { getCategoriesList } from "./scripts/categoriesHelper.js";
 
+getCategoriesList();
+
 document.getElementById("applyFilters").addEventListener("click", () => {
   const nameSearch = document.getElementById("name").value;
   const filters = {
@@ -7,6 +9,7 @@ document.getElementById("applyFilters").addEventListener("click", () => {
   }
 
   console.log(filters);
+
+  getCategoriesList(filters)
 });
 
-getCategoriesList();

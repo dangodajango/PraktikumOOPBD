@@ -1,5 +1,7 @@
 import { getBrandsList } from "./scripts/brandsHelper.js";
 
+getBrandsList();
+
 document.getElementById("applyFilters").addEventListener("click", () => {
   const nameSearch = document.getElementById("name").value;
   const filters = {
@@ -7,7 +9,6 @@ document.getElementById("applyFilters").addEventListener("click", () => {
   }
 
   console.log(filters);
+
+  getBrandsList(filters);
 });
-
-
-getBrandsList();

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:3001/api';
 
 async function get(url = "", data = {}) {
   // Default options are marked with *

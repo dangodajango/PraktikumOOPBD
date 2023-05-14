@@ -26,7 +26,7 @@ const getShoeList = (filters = {}) => {
 
     for(let i = 0; i < shoeItems.length; i++) {
         shoeItems[i].addEventListener("click", () => {
-          window.location.href = "shoe.html?id=" + shoeItems[i].getAttribute('id');
+          window.location.href = "shoe?id=" + shoeItems[i].getAttribute('id');
         })
     }
     setResultsCount(count);

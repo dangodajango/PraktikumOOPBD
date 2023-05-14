@@ -18,12 +18,10 @@ const brandsDropdown = document.getElementById("brandsDropdown");
 
 const defaultImg = 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg';
 
-
 imageURL.addEventListener("input", () => {
   console.log(imageURL)
   imagePreview.style.backgroundImage = `url(${imageURL.value})` ?? defaultImg;
 })
-
 
 if(id){
 
@@ -77,7 +75,7 @@ else {
 }
 
 const redirectToShoes = () => {
-  window.location.href = 'index.html';
+  window.location.href = 'index';
 }
 
 const validate = (data) => {

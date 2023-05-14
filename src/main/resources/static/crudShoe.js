@@ -1,8 +1,8 @@
 import { getBrandsDropdown } from "./scripts/brandsHelper.js";
 import { getCategoriesDropdown } from "./scripts/categoriesHelper.js";
-import { showErrors } from "./scripts/formsHelper.js";
+import { deleteOnClick, showErrors } from "./scripts/formsHelper.js";
 import { renderShoeDetails } from "./scripts/shoesHelper.js";
-import { get } from "./scripts/httpService.js";
+import { deleteConfirmed, get, handleError, post, put } from "./scripts/httpService.js";
 
 const id = new URLSearchParams(window.location.search).get('id');
 
@@ -40,6 +40,11 @@ if(id){
     document.getElementById("editShoe").style.display = 'block';
   });
 
+  document.getElementById("deleteShoe").addEventListener("click", () => deleteOnClick(id, () => {
+    deleteConfirmed(`/shoes/${id}`).then((response) => {
+      redirectToShoes();
+    }, handleError)
+  }))
 
   /* Edit shoe */
 
@@ -118,7 +123,16 @@ document.getElementById("save").addEventListener("click", () => {
   const isValid = validate(newShoeData);
   console.log('is valid:', isValid);
   if(isValid){
-    // redirectToShoes();
+    if(id){
+      put("/shoes/" + id, newShoeData).then((data) => {
+        redirectToShoes();
+      }, handleError)
+    }
+    else {
+      post("/shoes", newShoeData).then((data) => {
+        redirectToShoes();
+      }, handleError)
+    }
   }
 });
 

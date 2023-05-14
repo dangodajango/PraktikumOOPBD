@@ -4,11 +4,9 @@ getCategoriesList();
 
 document.getElementById("applyFilters").addEventListener("click", () => {
   const nameSearch = document.getElementById("name").value;
-  const filters = {
-    name: nameSearch
-  }
+  const filters = {};
 
-  console.log(filters);
+  if(nameSearch != '') filters.name = nameSearch;
 
   getCategoriesList(filters)
 });

@@ -3,24 +3,39 @@ const mockShoes = [
   {id: '2', name: 'qwrwe', brandId: 4, categoryIds: [1, 2], gender: ['f', 'm'], description: 'Comfy and cool', sizes: [36, 45], price: '120', imageURL: 'https://www.converse.com/dw/image/v2/BJJF_PRD/on/demandware.static/-/Sites-cnv-master-catalog-we/default/dw4fb98925/images/c_08/M9166_C_08X1.jpg?sw=406'}
 ]
 
-const getShoeList = () => {
+import { getUrlWithParams } from "./filtersHelper.js";
+import { get } from "./httpService.js";
+import { setResultsCount } from "./paginatorHelper.js";
+
+const getShoeList = (filters = {}) => {
 
   let shoeItems = '';
 
-  for(let i = 0; i < 50; i++){
+  const urlWithParams = getUrlWithParams('/shoes', filters);
+
+  get(urlWithParams).then(async (response) => {
+    const reponseJSON = (await response.json());
+    const shoes = reponseJSON.data;
+    const count = reponseJSON.count;
+    console.log(shoes);
+
+    let shoeItems = '';
+
+    for(let i = 0; i < 50; i++){
     shoeItems += renderShoeItem(mockShoes[0]);
     shoeItems += renderShoeItem(mockShoes[1]);
-  }
-  
-  document.getElementById("shoeList").innerHTML = shoeItems;
+    }
 
-  const shoes = document.getElementsByClassName("shoeItem");
+    document.getElementById("shoeList").innerHTML = shoeItems;
 
-  for(let i = 0; i < shoes.length; i++) {
-    shoes[i].addEventListener("click", () => {
-      window.location.href = "shoe.html?id=" + shoes[i].getAttribute('id');
-    })
-  }
+    shoeItems = document.getElementsByClassName("shoeItem");
+
+    for(let i = 0; i < shoeItems.length; i++) {
+        shoeItems[i].addEventListener("click", () => {
+          window.location.href = "shoe.html?id=" + shoeItems[i].getAttribute('id');
+        })
+    }
+   });
 }
 
 

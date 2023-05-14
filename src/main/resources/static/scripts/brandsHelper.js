@@ -5,24 +5,34 @@ const mockBrands = [
   {id: '4', name: 'Converse', description: 'Cool kid'}
 ]
 
-const getBrandsList = () => {
+import { getUrlWithParams } from "./filtersHelper.js";
+import { get } from "./httpService.js";
+import { setResultsCount } from "./paginatorHelper.js";
+
+const getBrandsList = (filters = {}) => {
 
   let brandItems = '';
 
-  for(let i = 0; i < mockBrands.length; i++){
-    brandItems += renderBrandItem(mockBrands[i])
-  }
-  
-  document.getElementById("brandsList").innerHTML = brandItems;
+  const urlWithParams = getUrlWithParams('/brands', filters);
 
-  const editButtons = document.getElementsByClassName("edit");
+  get(urlWithParams).then(async (response) => {
+    const reponseJSON = (await response.json());
+    const shoes = reponseJSON.data;
+    const count = reponseJSON.count;
 
-  for(let i = 0; i < editButtons.length; i++) {
-    editButtons[i].addEventListener("click", () => {
-      window.location.href = "brand.html?id=" + editButtons[i].getAttribute('id');
-    })
-  }
+    renderShoeItems(shoes);
+
+    brandItems = document.getElementsByClassName("brandItem");
+
+    for(let i = 0; i < brandItems.length; i++) {
+      brandItems[i].addEventListener("click", () => {
+        window.location.href = "brand.html?id=" + brandItems[i].getAttribute("data-id");
+      })
+    }
+    setResultsCount(count);
+  });
 }
+
 
 const getBrandsDropdown = (search) => {
   let brandItems = search ? '<option value="">All</option>' : '';

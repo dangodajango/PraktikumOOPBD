@@ -32,19 +32,20 @@
 
 <div id="brandsList">
 
-    <div id="noResults">
-        No brands found
+    <div class="brandItem" th:each="brand: ${brands}" th:id="${brand.id}">
+        <div th:text="${brand.name}"></div>
+        <div>
+            <button class="edit" th:id="${brand.id}">Edit</button>
+            <button class="delete">Delete</button>
+        </div>
     </div>
 
 </div>
 
-<div class="brandItem" th:each="brand: ${brands}" th:id="${brand.id}">
-    <div th:text="${brand.name}"></div>
-    <div>
-        <button class="edit" th:id="${brand.id}">Edit</button>
-        <button class="delete">Delete</button>
-    </div>
+<div id="noResults">
+    No brands found
 </div>
+
 
 <!--Js-->
 <script type="module" src="./brands.js"></script>

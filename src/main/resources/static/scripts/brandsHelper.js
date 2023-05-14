@@ -1,5 +1,6 @@
 import { getUrlWithParams } from "./filtersHelper.js";
-import { get } from "./httpService.js";
+import { get, deleteConfirmed } from "./httpService.js";
+import { deleteOnClick, showErrors } from "./formsHelper.js";
 import { setResultsCount } from "./paginatorHelper.js";
 
 const getBrandsList = (filters = {}) => {
@@ -18,13 +19,26 @@ const getBrandsList = (filters = {}) => {
 
     document.getElementById("brandsList").innerHTML = brandItems;
 
-    brandItems = document.getElementsByClassName("brandItem");
 
-    for(let i = 0; i < brandItems.length; i++) {
-      brandItems[i].addEventListener("click", () => {
-        window.location.href = "brand?id=" + brandItems[i].getAttribute("data-id");
-      })
+      const editButtons = document.getElementsByClassName("edit");
+
+      for(let i = 0; i < editButtons.length; i++) {
+        editButtons[i].addEventListener("click", () => {
+          window.location.href = "brands?id=" + editButtons[i].getAttribute("data-id");
+        })
+      }
+
+    const deleteButtons = document.getElementsByClassName("delete");
+
+    for(let i = 0; i < deleteButtons.length; i++) {
+        const id = deleteButtons[i].getAttribute("data-id");
+        deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
+          deleteConfirmed(`/brands/${id}`).then((response) => {
+            getBrandsList();
+          }, handleError)
+        }))
     }
+
     setResultsCount(brands.length);
   });
 }
@@ -49,7 +63,11 @@ const getBrandsDropdown = (search) => {
 const renderBrandItem = (brand) => {
   return `<div class="brandItem" id="${brand.id}">
   <div>${brand.name}</div>
-  <div><button class="edit" id="${brand.id}">Edit</button><button class="delete">Delete</button></div>
+  <div class="note" data-id="${brand.id}">Click again to confirm delete</div>
+   <div>
+      <button class="edit" data-id="${brand.id}">Edit</button>
+      <button class="delete" data-id="${brand.id}">Delete</button>
+    </div>
   </div>`;
 }
 

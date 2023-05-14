@@ -53,6 +53,13 @@ h2{
   align-items: center;
 }
 
+.note {
+  margin: 1rem 0;
+  color: red;
+  display: none;
+}
+
+
 h2:hover{
   color: #333;
 }

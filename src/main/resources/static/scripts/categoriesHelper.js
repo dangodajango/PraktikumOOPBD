@@ -25,6 +25,18 @@ const getCategoriesList = (filters = {}) => {
           window.location.href = "category?id=" + editButtons[i].getAttribute('id');
         })
       }
+
+        const deleteButtons = document.getElementsByClassName("delete");
+
+        for(let i = 0; i < deleteButtons.length; i++) {
+            const id = deleteButtons[i].getAttribute("data-id");
+            deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
+              deleteConfirmed(`/categories/${id}`).then((response) => {
+                getCategoriesList();
+              }, handleError)
+            }))
+        }
+
         setResultsCount(categories.length);
     });
 }

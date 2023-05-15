@@ -8,7 +8,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -18,6 +21,9 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Shoe {
 
     @Id
@@ -25,13 +31,16 @@ public class Shoe {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(name = "release_year")
-    private short releaseYear;
+    private String name;
 
     @Column(name = "price")
     private short price;
+
+    @Column(name = "min_size")
+    private short minSize;
+
+    @Column(name = "max_size")
+    private short maxSize;
 
     @Column(name = "image_url")
     private String URL;
@@ -42,7 +51,7 @@ public class Shoe {
             joinColumns = @JoinColumn(name = "shoe_id"),
             inverseJoinColumns = @JoinColumn(name = "brand_id")
     )
-    private Brand brands;
+    private Brand brand;
 
     @ManyToMany
     @JoinTable(

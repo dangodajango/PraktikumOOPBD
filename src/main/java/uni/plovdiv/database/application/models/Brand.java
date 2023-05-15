@@ -33,6 +33,6 @@ public class Brand {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "brands")
+    @OneToMany(mappedBy = "brand")
     private List<Shoe> shoes;
 }

@@ -44,7 +44,7 @@ public class CategoryController {
         categoryService.createCategory(categoryCreateDto);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void updateCategory(
             @RequestParam Long categoryId,
             @RequestBody CategoryUpdateDto categoryUpdateDto
@@ -52,7 +52,7 @@ public class CategoryController {
         categoryService.updateCategory(categoryId, categoryUpdateDto);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public void deleteCategory(
             @RequestParam Long categoryId
     ) {

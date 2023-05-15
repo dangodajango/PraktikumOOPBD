@@ -16,6 +16,11 @@ public class NavigationController {
         return "shoe";
     }
 
+    @RequestMapping("/categories")
+    public String categories() {
+        return "categories";
+    }
+
     @RequestMapping("/category")
     public String category() {
         return "category";
@@ -26,4 +31,8 @@ public class NavigationController {
         return "brand";
     }
 
+    @RequestMapping("/brands")
+    public String brands() {
+        return "brands";
+    }
 }

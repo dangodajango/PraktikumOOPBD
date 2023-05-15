@@ -7,8 +7,6 @@ import lombok.Getter;
 @Getter
 public class CategoryUpdateDto {
 
-    private Long id;
-
     private String title;
 
     private String description;

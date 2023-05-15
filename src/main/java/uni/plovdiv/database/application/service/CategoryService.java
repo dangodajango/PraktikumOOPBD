@@ -28,6 +28,16 @@ public class CategoryService {
                 .toList();
     }
 
+    public CategoryGetDto getCategoryById(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalStateException(String.format("Category with ID - %s does not exist", categoryId)));
+        return CategoryGetDto.builder()
+                .id(categoryId)
+                .title(category.getTitle())
+                .description(category.getDescription())
+                .build();
+    }
+
     public void createCategory(CategoryCreateDto categoryCreateDto) {
         categoryRepository.save(Category.builder()
                 .title(categoryCreateDto.getTitle())
@@ -36,8 +46,7 @@ public class CategoryService {
         );
     }
 
-    public void updateCategory(CategoryUpdateDto categoryUpdateDto) {
-        Long categoryId = categoryUpdateDto.getId();
+    public void updateCategory(Long categoryId, CategoryUpdateDto categoryUpdateDto) {
         Category categoryToBeUpdated = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalStateException(String.format("Category with ID - %s does not exist", categoryId)));
         updateCategory(categoryToBeUpdated, categoryUpdateDto);

@@ -32,9 +32,9 @@ public class BrandController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public BrandGetDto getBrandById(
-            @RequestParam Long brandId
+            @RequestParam Long id
     ) {
-        return brandService.getBrandById(brandId);
+        return brandService.getBrandById(id);
     }
 
     @PostMapping("/create")
@@ -46,16 +46,16 @@ public class BrandController {
 
     @PutMapping
     public void updateBrand(
-            @RequestParam Long brandId,
+            @RequestParam Long id,
             @RequestBody BrandUpdateDto brandUpdateDto
     ) {
-        brandService.updateBrand(brandId, brandUpdateDto);
+        brandService.updateBrand(id, brandUpdateDto);
     }
 
     @DeleteMapping
     public void deleteBrand(
-            @RequestParam Long brandId
+            @RequestParam Long id
     ) {
-        brandService.deleteBrand(brandId);
+        brandService.deleteBrand(id);
     }
 }

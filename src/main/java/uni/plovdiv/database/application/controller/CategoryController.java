@@ -32,9 +32,9 @@ public class CategoryController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public CategoryGetDto getCategoryById(
-            @RequestParam Long categoryId
+            @RequestParam Long id
     ) {
-        return categoryService.getCategoryById(categoryId);
+        return categoryService.getCategoryById(id);
     }
 
     @PostMapping("/create")
@@ -46,16 +46,16 @@ public class CategoryController {
 
     @PutMapping
     public void updateCategory(
-            @RequestParam Long categoryId,
+            @RequestParam Long id,
             @RequestBody CategoryUpdateDto categoryUpdateDto
     ) {
-        categoryService.updateCategory(categoryId, categoryUpdateDto);
+        categoryService.updateCategory(id, categoryUpdateDto);
     }
 
     @DeleteMapping
     public void deleteCategory(
-            @RequestParam Long categoryId
+            @RequestParam Long id
     ) {
-        categoryService.deleteCategory(categoryId);
+        categoryService.deleteCategory(id);
     }
 }

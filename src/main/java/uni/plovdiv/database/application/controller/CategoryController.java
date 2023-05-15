@@ -3,6 +3,7 @@ package uni.plovdiv.database.application.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,9 +31,9 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public CategoryGetDto getCategoryById(
-            @RequestParam Long id
+            @PathVariable Long id
     ) {
         return categoryService.getCategoryById(id);
     }
@@ -44,17 +45,17 @@ public class CategoryController {
         categoryService.createCategory(categoryCreateDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateCategory(
-            @RequestParam Long id,
+            @PathVariable Long id,
             @RequestBody CategoryUpdateDto categoryUpdateDto
     ) {
         categoryService.updateCategory(id, categoryUpdateDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteCategory(
-            @RequestParam Long id
+            @PathVariable Long id
     ) {
         categoryService.deleteCategory(id);
     }

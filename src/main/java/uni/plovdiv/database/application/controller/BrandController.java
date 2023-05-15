@@ -3,11 +3,11 @@ package uni.plovdiv.database.application.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uni.plovdiv.database.application.dto.brand.BrandCreateDto;
 import uni.plovdiv.database.application.dto.brand.BrandGetDto;
@@ -30,9 +30,9 @@ public class BrandController {
         return brandService.getAllBrands();
     }
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public BrandGetDto getBrandById(
-            @RequestParam Long id
+            @PathVariable Long id
     ) {
         return brandService.getBrandById(id);
     }
@@ -44,17 +44,17 @@ public class BrandController {
         brandService.createBrand(brandCreateDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public void updateBrand(
-            @RequestParam Long id,
+            @PathVariable Long id,
             @RequestBody BrandUpdateDto brandUpdateDto
     ) {
         brandService.updateBrand(id, brandUpdateDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteBrand(
-            @RequestParam Long id
+            @PathVariable Long id
     ) {
         brandService.deleteBrand(id);
     }

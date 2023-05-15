@@ -3,6 +3,7 @@ package uni.plovdiv.database.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uni.plovdiv.database.application.dto.brand.BrandCreateDto;
+import uni.plovdiv.database.application.dto.brand.BrandGetDto;
 import uni.plovdiv.database.application.dto.brand.BrandUpdateDto;
 import uni.plovdiv.database.application.models.Brand;
 import uni.plovdiv.database.application.repositories.BrandRepository;
@@ -17,8 +18,14 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
 
-    public List<Brand> getAllBrands() {
-        return brandRepository.findAll();
+    public List<BrandGetDto> getAllBrands() {
+        return brandRepository.findAll().stream()
+                .map(brand -> BrandGetDto.builder()
+                        .id(brand.getId())
+                        .name(brand.getName())
+                        .description(brand.getDescription())
+                        .build())
+                .toList();
     }
 
     public void createBrand(BrandCreateDto brandCreateDto) {

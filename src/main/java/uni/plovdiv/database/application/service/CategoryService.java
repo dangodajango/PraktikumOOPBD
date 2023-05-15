@@ -3,6 +3,7 @@ package uni.plovdiv.database.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uni.plovdiv.database.application.dto.category.CategoryCreateDto;
+import uni.plovdiv.database.application.dto.category.CategoryGetDto;
 import uni.plovdiv.database.application.dto.category.CategoryUpdateDto;
 import uni.plovdiv.database.application.models.Category;
 import uni.plovdiv.database.application.repositories.CategoryRepository;
@@ -17,8 +18,14 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryGetDto> getAllCategories() {
+        return categoryRepository.findAll().stream()
+                .map(category -> CategoryGetDto.builder()
+                        .id(category.getId())
+                        .title(category.getTitle())
+                        .description(category.getDescription())
+                        .build())
+                .toList();
     }
 
     public void createCategory(CategoryCreateDto categoryCreateDto) {

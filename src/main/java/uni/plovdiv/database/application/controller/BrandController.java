@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uni.plovdiv.database.application.dto.brand.BrandCreateDto;
+import uni.plovdiv.database.application.dto.brand.BrandGetDto;
 import uni.plovdiv.database.application.dto.brand.BrandUpdateDto;
-import uni.plovdiv.database.application.models.Brand;
 import uni.plovdiv.database.application.service.BrandService;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class BrandController {
     private final BrandService brandService;
 
     @GetMapping("/all")
-    public List<Brand> brands() {
+    public List<BrandGetDto> brands() {
         return brandService.getAllBrands();
     }
 

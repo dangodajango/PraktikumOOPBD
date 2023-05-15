@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uni.plovdiv.database.application.dto.category.CategoryCreateDto;
+import uni.plovdiv.database.application.dto.category.CategoryGetDto;
 import uni.plovdiv.database.application.dto.category.CategoryUpdateDto;
-import uni.plovdiv.database.application.models.Category;
 import uni.plovdiv.database.application.service.CategoryService;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
-    public List<Category> getAllCategories() {
+    public List<CategoryGetDto> getAllCategories() {
         return categoryService.getAllCategories();
     }
 

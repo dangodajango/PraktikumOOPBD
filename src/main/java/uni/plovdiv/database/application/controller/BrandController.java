@@ -44,7 +44,7 @@ public class BrandController {
         brandService.createBrand(brandCreateDto);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void updateBrand(
             @RequestParam Long brandId,
             @RequestBody BrandUpdateDto brandUpdateDto
@@ -52,7 +52,7 @@ public class BrandController {
         brandService.updateBrand(brandId, brandUpdateDto);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public void deleteBrand(
             @RequestParam Long brandId
     ) {

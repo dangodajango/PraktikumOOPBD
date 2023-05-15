@@ -16,6 +16,8 @@ import uni.plovdiv.database.application.service.BrandService;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/brands")
 @RequiredArgsConstructor
@@ -23,9 +25,16 @@ public class BrandController {
 
     private final BrandService brandService;
 
-    @GetMapping("/all")
-    public List<BrandGetDto> brands() {
+    @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
+    public List<BrandGetDto> getAllBrands() {
         return brandService.getAllBrands();
+    }
+
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public BrandGetDto getBrandById(
+            @RequestParam Long brandId
+    ) {
+        return brandService.getBrandById(brandId);
     }
 
     @PostMapping("/create")
@@ -37,9 +46,10 @@ public class BrandController {
 
     @PutMapping("/update")
     public void updateBrand(
+            @RequestParam Long brandId,
             @RequestBody BrandUpdateDto brandUpdateDto
     ) {
-        brandService.updateBrand(brandUpdateDto);
+        brandService.updateBrand(brandId, brandUpdateDto);
     }
 
     @DeleteMapping("/delete")

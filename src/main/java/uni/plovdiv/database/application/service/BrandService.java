@@ -28,6 +28,16 @@ public class BrandService {
                 .toList();
     }
 
+    public BrandGetDto getBrandById(Long brandId) {
+        Brand brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new IllegalStateException(String.format("Brand with ID - %s does not exist", brandId)));
+        return BrandGetDto.builder()
+                .id(brand.getId())
+                .name(brand.getName())
+                .description(brand.getDescription())
+                .build();
+    }
+
     public void createBrand(BrandCreateDto brandCreateDto) {
         brandRepository.save(Brand.builder()
                 .name(brandCreateDto.getName())
@@ -36,8 +46,7 @@ public class BrandService {
         );
     }
 
-    public void updateBrand(BrandUpdateDto brandUpdateDto) {
-        Long brandId = brandUpdateDto.getId();
+    public void updateBrand(Long brandId, BrandUpdateDto brandUpdateDto) {
         Brand brandToBeUpdated = brandRepository.findById(brandId)
                 .orElseThrow(() -> new IllegalStateException(String.format("Brand with ID - %s does not exist", brandId)));
         updateBrand(brandToBeUpdated, brandUpdateDto);

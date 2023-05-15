@@ -7,8 +7,6 @@ import lombok.Getter;
 @Getter
 public class BrandUpdateDto {
 
-    private Long id;
-
     private String name;
 
     private String description;

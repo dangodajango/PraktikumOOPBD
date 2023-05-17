@@ -4,7 +4,7 @@ import { setResultsCount } from "./paginatorHelper.js";
 
 const getCategoriesList = (filters = {}) => {
 
-  const urlWithParams = getUrlWithParams('/categories', filters);
+  const urlWithParams = getUrlWithParams('/categories/all', filters);
 
   get(urlWithParams).then(async (response) => {
     const categories = (await response.json());
@@ -30,7 +30,7 @@ const getCategoriesList = (filters = {}) => {
         for(let i = 0; i < deleteButtons.length; i++) {
             const id = deleteButtons[i].getAttribute("data-id");
             deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
-              deleteConfirmed(`/${id}`).then((response) => {
+              deleteConfirmed(`/categories/${id}`).then((response) => {
                 getCategoriesList();
               }, handleError)
             }))
@@ -43,7 +43,7 @@ const getCategoriesList = (filters = {}) => {
 const getCategoriesDropdown = () => {
   let categoryItems = '';
 
-  get('/categories').then(async (response) => {
+  get('/categories/all').then(async (response) => {
     const reponseJSON = (await response.json());
     const categories = reponseJSON.data;
       for(let i = 0; i < categories.length; i++){
@@ -56,7 +56,7 @@ const getCategoriesDropdown = () => {
 
 const renderCategoryItem = (category) => {
   return `<div class="categoryItem" id="${category.id}">
-  <div>${category.name}</div>
+  <div>${category.title}</div>
   <div><button class="edit" id="${category.id}">Edit</button><button class="delete">Delete</button></div>
   </div>`;
 }

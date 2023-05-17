@@ -26,7 +26,7 @@ imageURL.addEventListener("input", () => {
 if(id){
 
   const response = await get('/shoes/' + id);
-  const shoe = (await response.json()).data;
+  const shoe = (await response.json());
 
   console.log('fetched shoe', shoe);
   
@@ -62,6 +62,9 @@ if(id){
 
   getCategoriesDropdown();
 
+  for(let i = 0; i < shoe.categoryIds.length; i++){
+    document.querySelector(`#categoriesDropdown>option[value="${shoe.categoryIds[i]}"]`).selected = true;
+  }
 
 }
 else {
@@ -121,12 +124,12 @@ document.getElementById("save").addEventListener("click", () => {
   console.log('is valid:', isValid);
   if(isValid){
     if(id){
-      put('shoes/' + id, newShoeData).then((data) => {
+      put('/shoes/' + id, newShoeData).then((data) => {
         redirectToShoes();
       }, handleError)
     }
     else {
-      post('shoes/create', newShoeData).then((data) => {
+      post('/shoes/create', newShoeData).then((data) => {
         redirectToShoes();
       }, handleError)
     }

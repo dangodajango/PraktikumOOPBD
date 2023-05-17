@@ -7,7 +7,7 @@ const getBrandsList = (filters = {}) => {
 
   let brandItems = '';
 
-  const urlWithParams = getUrlWithParams('/brands', filters);
+  const urlWithParams = getUrlWithParams('/brands/all', filters);
 
   get(urlWithParams).then(async (response) => {
     const brands = (await response.json());
@@ -32,7 +32,7 @@ const getBrandsList = (filters = {}) => {
     for(let i = 0; i < deleteButtons.length; i++) {
         const id = deleteButtons[i].getAttribute("data-id");
         deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
-          deleteConfirmed(`/${id}`).then((response) => {
+          deleteConfirmed(`/brands/${id}`).then((response) => {
             getBrandsList();
           }, handleError)
         }))
@@ -46,7 +46,7 @@ const getBrandsList = (filters = {}) => {
 const getBrandsDropdown = (search) => {
   let brandItems = search ? '<option value="">All</option>' : '';
 
-  get('/brands').then(async (response) => {
+  get('/brands/all').then(async (response) => {
     const reponseJSON = (await response.json());
     const brands = reponseJSON.data;
 

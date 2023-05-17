@@ -5,8 +5,8 @@ const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
 
-  const response = await get('/' + id);
-  const brand = (await response.json()).data;
+  const response = await get('/brands/' + id);
+  const brand = (await response.json());
   console.log('fetched brand', brand);
 
   document.getElementById("name").value = brand.name;
@@ -40,12 +40,12 @@ document.getElementById("save").addEventListener("click", () => {
   console.log('is valid:', isValid);
   if(isValid){
     if(id){
-      put('/' + id, newBrandData).then((data) => {
+      put('/brands/' + id, newBrandData).then((data) => {
         redirectToBrands();
       }, handleError)
     }
     else {
-      post("/brands", newBrandData).then((data) => {
+      post('/brands/create', newBrandData).then((data) => {
         redirectToBrands();
       }, handleError)
     }

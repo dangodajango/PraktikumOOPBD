@@ -9,12 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@Setter
 @Getter
 @Builder
 @NoArgsConstructor
@@ -31,6 +33,6 @@ public class Brand {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "brands")
+    @OneToMany(mappedBy = "brand")
     private List<Shoe> shoes;
 }

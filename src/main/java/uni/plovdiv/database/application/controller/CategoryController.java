@@ -1,31 +1,61 @@
 package uni.plovdiv.database.application.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import uni.plovdiv.database.application.dto.category.CategoryCreateDto;
+import uni.plovdiv.database.application.dto.category.CategoryGetDto;
+import uni.plovdiv.database.application.dto.category.CategoryUpdateDto;
 import uni.plovdiv.database.application.service.CategoryService;
 
-@Controller
+import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+@RestController
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @RequestMapping(value = "/categories")
-    public String categories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories";
+    @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
+    public List<CategoryGetDto> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
-    @PostMapping(value = "/category/create")
-    public String createCategory(
-            @RequestParam String title,
-            @RequestParam String description
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public CategoryGetDto getCategoryById(
+            @PathVariable Long id
     ) {
-        categoryService.createCategory(title, description);
-        return "redirect:/categories";
+        return categoryService.getCategoryById(id);
+    }
+
+    @PostMapping("/create")
+    public void createCategory(
+            @RequestBody CategoryCreateDto categoryCreateDto
+    ) {
+        categoryService.createCategory(categoryCreateDto);
+    }
+
+    @PutMapping("/{id}")
+    public void updateCategory(
+            @PathVariable Long id,
+            @RequestBody CategoryUpdateDto categoryUpdateDto
+    ) {
+        categoryService.updateCategory(id, categoryUpdateDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(
+            @PathVariable Long id
+    ) {
+        categoryService.deleteCategory(id);
     }
 }

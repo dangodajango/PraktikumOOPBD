@@ -6,12 +6,10 @@ const getShoeList = (filters = {}) => {
 
   let shoeItems = '';
 
-  const urlWithParams = getUrlWithParams('/shoes', filters);
+  const urlWithParams = getUrlWithParams('/shoes/all', filters);
 
   get(urlWithParams).then(async (response) => {
-    const reponseJSON = (await response.json());
-    const shoes = reponseJSON.data;
-    const count = reponseJSON.count;
+    const shoes = (await response.json());
     console.log(shoes);
 
     let shoeItems = '';
@@ -29,7 +27,7 @@ const getShoeList = (filters = {}) => {
           window.location.href = "shoe?id=" + shoeItems[i].getAttribute('id');
         })
     }
-    setResultsCount(count);
+    setResultsCount(shoes.length);
    });
 }
 

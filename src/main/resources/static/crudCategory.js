@@ -5,7 +5,7 @@ const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
 
-  const response = await get('/categories/' + id);
+  const response = await get('/' + id);
   const category = (await response.json()).data;
 
   console.log('fetched category', category);
@@ -42,7 +42,7 @@ document.getElementById("save").addEventListener("click", () => {
   console.log('is valid:', isValid);
   if(isValid){
     if(id){
-        put("/categories/" + id, newCategoryData).then((data) => {
+        put('/' + id, newCategoryData).then((data) => {
             redirectToCategories();
           }, handleError)
         }

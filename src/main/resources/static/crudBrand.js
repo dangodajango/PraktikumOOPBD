@@ -5,7 +5,7 @@ const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
 
-  const response = await get('/brands/' + id);
+  const response = await get('/' + id);
   const brand = (await response.json()).data;
   console.log('fetched brand', brand);
 
@@ -40,7 +40,7 @@ document.getElementById("save").addEventListener("click", () => {
   console.log('is valid:', isValid);
   if(isValid){
     if(id){
-      put("/brands/" + id, newBrandData).then((data) => {
+      put('/' + id, newBrandData).then((data) => {
         redirectToBrands();
       }, handleError)
     }

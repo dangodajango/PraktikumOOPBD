@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3001/api';
+//const API_URL = 'http://localhost:3001/api'; - API for node backend / Elena /
+const API_URL = 'http://localhost:8080';
 
 async function get(url = "", data = {}) {
   // Default options are marked with *

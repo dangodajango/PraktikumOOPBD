@@ -62,9 +62,6 @@ if(id){
 
   getCategoriesDropdown();
 
-  for(let i = 0; i < shoe.categoryIds.length; i++){
-    document.querySelector(`#categoriesDropdown>option[value="${shoe.categoryIds[i]}"]`).selected = true;
-  }
 
 }
 else {
@@ -124,12 +121,12 @@ document.getElementById("save").addEventListener("click", () => {
   console.log('is valid:', isValid);
   if(isValid){
     if(id){
-      put("/shoes/" + id, newShoeData).then((data) => {
+      put('shoes/' + id, newShoeData).then((data) => {
         redirectToShoes();
       }, handleError)
     }
     else {
-      post("/shoes", newShoeData).then((data) => {
+      post('shoes/create', newShoeData).then((data) => {
         redirectToShoes();
       }, handleError)
     }

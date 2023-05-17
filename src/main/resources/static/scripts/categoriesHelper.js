@@ -7,8 +7,7 @@ const getCategoriesList = (filters = {}) => {
   const urlWithParams = getUrlWithParams('/categories', filters);
 
   get(urlWithParams).then(async (response) => {
-    const reponseJSON = (await response.json());
-    const categories = reponseJSON.data;
+    const categories = (await response.json());
 
       let categoryItems = '';
 
@@ -31,7 +30,7 @@ const getCategoriesList = (filters = {}) => {
         for(let i = 0; i < deleteButtons.length; i++) {
             const id = deleteButtons[i].getAttribute("data-id");
             deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
-              deleteConfirmed(`/categories/${id}`).then((response) => {
+              deleteConfirmed(`/${id}`).then((response) => {
                 getCategoriesList();
               }, handleError)
             }))

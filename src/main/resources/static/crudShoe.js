@@ -11,8 +11,6 @@ const name = document.getElementById("name");
 const imagePreview = document.getElementById("imagePreview");
 const sizesMin = document.getElementById("sizesMin");
 const sizesMax = document.getElementById("sizesMax");
-const genderF = document.getElementById("genderF");
-const genderM = document.getElementById("genderM");
 const price = document.getElementById("price");
 const brandsDropdown = document.getElementById("brandsDropdown");
 
@@ -53,8 +51,6 @@ if(id){
   imageURL.value = shoe.imageURL;
   sizesMin.value = shoe.sizes[0];
   sizesMax.value = shoe.sizes[1];
-  genderF.checked = shoe.gender.indexOf('f') > -1;
-  genderM.checked = shoe.gender.indexOf('m') > -1;
   price.value = shoe.price;
 
   getBrandsDropdown(false);
@@ -90,17 +86,12 @@ const validate = (data) => {
   if(data.price < 1) errors.push('price');
   if(data.sizes[0] === '' || data.sizes[1] === '' || Number(data.sizes[0]) >= Number(data.sizes[1]) || Number(data.sizes[0]) < 1) errors.push('sizes');
   if(data.categoryIds.length === 0) errors.push('categories');
-  if(data.gender.length === 0) errors.push('gender');
 
   showErrors(errors);
   return errors.length === 0;
 }
 
 document.getElementById("save").addEventListener("click", () => {
-  
-  let genderArr = [];
-  if(genderM.checked) genderArr.push('m');
-  if(genderF.checked) genderArr.push('f');
 
   let categoryIds = [];
   const options = document.querySelectorAll("#categoriesDropdown>option");
@@ -111,9 +102,9 @@ document.getElementById("save").addEventListener("click", () => {
   const newShoeData = {
     name: name.value,
     imageURL: imageURL.value,
-    sizes: [sizesMin.value, sizesMax.value],
-    gender: genderArr,
-    price: price.value,
+    minSize: Number(sizesMin.value),
+    maxSize: Number(sizesMax.value),
+    price: Number(price.value),
     brandId: brandsDropdown.value,
     categoryIds: categoryIds,
   }

@@ -5,15 +5,15 @@ import { setResultsCount } from "./paginatorHelper.js";
 
 const getBrandsList = (filters = {}) => {
 
-  let brandItems = '';
 
   const urlWithParams = getUrlWithParams('/brands/all', filters);
 
   get(urlWithParams).then(async (response) => {
+  let brandItems = '';
     const brands = (await response.json());
 
     for(let i = 0; i < brands.length; i++){
-    brandItems += renderBrandItem(brands[i])
+        brandItems += renderBrandItem(brands[i])
     }
 
     document.getElementById("brandsList").innerHTML = brandItems;
@@ -22,8 +22,9 @@ const getBrandsList = (filters = {}) => {
       const editButtons = document.getElementsByClassName("edit");
 
       for(let i = 0; i < editButtons.length; i++) {
+        console.log(editButtons[i]);
         editButtons[i].addEventListener("click", () => {
-          window.location.href = "brands?id=" + editButtons[i].getAttribute("data-id");
+          window.location.href = "brand?id=" + editButtons[i].getAttribute("data-id");
         })
       }
 
@@ -47,8 +48,7 @@ const getBrandsDropdown = (search) => {
   let brandItems = search ? '<option value="">All</option>' : '';
 
   get('/brands/all').then(async (response) => {
-    const reponseJSON = (await response.json());
-    const brands = reponseJSON.data;
+    const brands = (await response.json());
 
     for(let i = 0; i < brands.length; i++){
         brandItems += `<option value="${brands[i].id}">${brands[i].name}</option>`;

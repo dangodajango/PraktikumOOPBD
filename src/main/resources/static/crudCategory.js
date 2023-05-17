@@ -1,5 +1,5 @@
-import { get, handleError, post, put } from "./scripts/httpService.js";
-import { showErrors } from "./scripts/formsHelper.js";
+import { get, deleteConfirmed, handleError, post, put } from "./scripts/httpService.js";
+import { deleteOnClick, showErrors } from "./scripts/formsHelper.js";
 
 const id = new URLSearchParams(window.location.search).get('id');
 

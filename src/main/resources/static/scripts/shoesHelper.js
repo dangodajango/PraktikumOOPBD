@@ -46,8 +46,7 @@ const renderShoeDetails = (shoe) => {
     <div class="shoeDetails--image" style="background-image: url(${shoe.imageURL})"></div>
     <div id="shoeDetails--leftpanel">
       <div id="shoeDetails--label">${shoe.name}</div>
-      <div id="shoeDetails--sizes">Comes in sizes: ${shoe.sizes.join(' - ')} (EU)</div>
-      <div id="shoeDetails--gender">Suitable for: ${shoe.gender.join(', ').replace('m', 'Men').replace('f', 'Women')}</div>
+      <div id="shoeDetails--sizes">Comes in sizes: ${shoe.minSize} - ${shoe.maxSize} (EU)</div>
       <div id="shoeDetails--price">${shoe.price}lv</div>
       
       <div class="note" data-id="${shoe.id}">Click again to confirm delete</div>

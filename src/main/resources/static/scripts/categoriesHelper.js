@@ -1,5 +1,6 @@
 import { getUrlWithParams } from "./filtersHelper.js";
-import { get } from "./httpService.js";
+import { get, deleteConfirmed } from "./httpService.js";
+import { deleteOnClick, showErrors } from "./formsHelper.js";
 import { setResultsCount } from "./paginatorHelper.js";
 
 const getCategoriesList = (filters = {}) => {
@@ -44,10 +45,9 @@ const getCategoriesDropdown = () => {
   let categoryItems = '';
 
   get('/categories/all').then(async (response) => {
-    const reponseJSON = (await response.json());
-    const categories = reponseJSON.data;
+    const categories = (await response.json());
       for(let i = 0; i < categories.length; i++){
-        categoryItems += `<option value="${categories[i].id}">${categories[i].name}</option>`;
+        categoryItems += `<option value="${categories[i].id}">${categories[i].title}</option>`;
       }
 
     document.getElementById("categoriesDropdown").innerHTML = categoryItems;

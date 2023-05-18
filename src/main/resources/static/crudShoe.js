@@ -49,18 +49,19 @@ if(id){
   name.value = shoe.name;
   imagePreview.style.backgroundImage = `url(${shoe.imageURL})`;
   imageURL.value = shoe.imageURL;
-  sizesMin.value = shoe.sizes[0];
-  sizesMax.value = shoe.sizes[1];
+  sizesMin.value = shoe.minSize;
+  sizesMax.value = shoe.maxSize;
   price.value = shoe.price;
 
-  getBrandsDropdown(false);
-  brandsDropdown.value = shoe.brandId;
+  getBrandsDropdown(false, () => {
+    brandsDropdown.value = shoe.brandId;
+   });
 
-  getCategoriesDropdown();
-
-  for(let i = 0; i < shoe.categoryIds.length; i++){
-    document.querySelector(`#categoriesDropdown>option[value="${shoe.categoryIds[i]}"]`).selected = true;
-  }
+  getCategoriesDropdown(() => {
+      for(let i = 0; i < shoe.categoryIds.length; i++){
+        document.querySelector(`#categoriesDropdown>option[value="${shoe.categoryIds[i]}"]`).selected = true;
+      }
+  });
 
 }
 else {
@@ -76,7 +77,7 @@ else {
 }
 
 const redirectToShoes = () => {
-  window.location.href = 'index';
+  //window.location.href = 'index';
 }
 
 const validate = (data) => {
@@ -84,7 +85,7 @@ const validate = (data) => {
   if(data.name.length < 5) errors.push('name');
   if(data.imageURL.length < 5) errors.push('imageURL');
   if(data.price < 1) errors.push('price');
-  if(data.sizes[0] === '' || data.sizes[1] === '' || Number(data.sizes[0]) >= Number(data.sizes[1]) || Number(data.sizes[0]) < 1) errors.push('sizes');
+  if(data.minSize === '' || data.maxSize === '' || Number(data.minSize) >= Number(data.maxSize) || Number(data.minSize) < 1) errors.push('sizes');
   if(data.categoryIds.length === 0) errors.push('categories');
 
   showErrors(errors);

@@ -1,10 +1,9 @@
 import { getUrlWithParams } from "./filtersHelper.js";
-import { get, deleteConfirmed } from "./httpService.js";
+import { get, deleteConfirmed, handleError } from "./httpService.js";
 import { deleteOnClick, showErrors } from "./formsHelper.js";
 import { setResultsCount } from "./paginatorHelper.js";
 
 const getBrandsList = (filters = {}) => {
-
 
   const urlWithParams = getUrlWithParams('/brands/all', filters);
 
@@ -44,7 +43,7 @@ const getBrandsList = (filters = {}) => {
 }
 
 
-const getBrandsDropdown = (search) => {
+const getBrandsDropdown = (search, afterLoading) => {
   let brandItems = search ? '<option value="">All</option>' : '';
 
   get('/brands/all').then(async (response) => {
@@ -55,7 +54,11 @@ const getBrandsDropdown = (search) => {
     }
 
     document.getElementById("brandsDropdown").innerHTML = brandItems;
-   });
+    // if there is passed a function that should execute after loading (selecting items in the dropdown for example)
+    if(afterLoading){
+      afterLoading();
+    }
+  });
 }
 
 

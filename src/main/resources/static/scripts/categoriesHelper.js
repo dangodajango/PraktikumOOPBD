@@ -41,7 +41,7 @@ const getCategoriesList = (filters = {}) => {
     });
 }
 
-const getCategoriesDropdown = () => {
+const getCategoriesDropdown = (afterLoading) => {
   let categoryItems = '';
 
   get('/categories/all').then(async (response) => {
@@ -51,6 +51,11 @@ const getCategoriesDropdown = () => {
       }
 
     document.getElementById("categoriesDropdown").innerHTML = categoryItems;
+
+    // if there is passed a function that should execute after loading (selecting items in the dropdown for example)
+    if(afterLoading){
+      afterLoading();
+    }
   });
 }
 

@@ -24,27 +24,26 @@ public class ShoeService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<ShoeGetDto> getAllShoes() {
-        return shoeRepository.findAll().stream()
-                .map(shoe -> ShoeGetDto.builder()
-                        .id(shoe.getId())
-                        .name(shoe.getName())
-                        .imageURL(shoe.getURL())
-                        .price(shoe.getPrice())
-                        .maxSize(shoe.getMaxSize())
-                        .minSize(shoe.getMinSize())
-                        .brandId(shoe.getBrand().getId())
-                        .categoryIds(shoe.getCategories().stream()
-                                .map(Category::getId)
-                                .toList())
-                        .build())
+    public List<ShoeGetDto> getAllShoes(String name, Short minPrice, Short maxPrice, Long brandId) {
+        return shoeRepository.findAll()
+                .stream()
+                .filter(shoe -> name == null || shoe.getName().contains(name))
+                .filter(shoe -> brandId == null || shoe.getBrand().getId().equals(brandId))
+                .filter(shoe -> minPrice == null || shoe.getPrice() > minPrice)
+                .filter(shoe -> maxPrice == null || shoe.getPrice() < maxPrice)
+                .map(this::mapToShoeGetDto)
                 .toList();
     }
 
     public ShoeGetDto getShoeById(Long id) {
         Shoe shoe = shoeRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(String.format("Shoe with ID - %s does not exist", id)));
+        return mapToShoeGetDto(shoe);
+    }
+
+    private ShoeGetDto mapToShoeGetDto(Shoe shoe) {
         return ShoeGetDto.builder()
+                .id(shoe.getId())
                 .name(shoe.getName())
                 .imageURL(shoe.getURL())
                 .price(shoe.getPrice())
@@ -75,6 +74,7 @@ public class ShoeService {
                 .orElseThrow(() -> new IllegalStateException(String.format("Shoe with ID - %s does not exist!", id)));
         shoe.setName(shoeUpdateDto.getName());
         shoe.setURL(shoeUpdateDto.getImageURL());
+        shoe.setPrice(shoeUpdateDto.getPrice());
         shoe.setMinSize(shoeUpdateDto.getMinSize());
         shoe.setMaxSize(shoeUpdateDto.getMaxSize());
         updateShoeBrandRelation(shoe, shoeUpdateDto.getBrandId());

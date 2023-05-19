@@ -27,6 +27,7 @@ public class ShoeService {
     public List<ShoeGetDto> getAllShoes() {
         return shoeRepository.findAll().stream()
                 .map(shoe -> ShoeGetDto.builder()
+                        .id(shoe.getId())
                         .name(shoe.getName())
                         .imageURL(shoe.getURL())
                         .price(shoe.getPrice())

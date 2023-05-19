@@ -9,6 +9,8 @@ import java.util.List;
 @Getter
 public class ShoeGetDto {
 
+    private Long id;
+
     private String name;
 
     private String imageURL;

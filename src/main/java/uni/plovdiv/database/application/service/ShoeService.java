@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uni.plovdiv.database.application.dto.shoe.ShoeCreateDto;
 import uni.plovdiv.database.application.dto.shoe.ShoeGetDto;
+import uni.plovdiv.database.application.dto.shoe.ShoeUpdateDto;
 import uni.plovdiv.database.application.models.Brand;
 import uni.plovdiv.database.application.models.Category;
 import uni.plovdiv.database.application.models.Shoe;
@@ -65,6 +66,18 @@ public class ShoeService {
                 .build();
         updateShoeBrandRelation(shoe, shoeCreateDto.getBrandId());
         updateShoeCategoryRelation(shoe, shoeCreateDto.getCategoryIds());
+        shoeRepository.save(shoe);
+    }
+
+    public void updateShoe(Long id, ShoeUpdateDto shoeUpdateDto) {
+        Shoe shoe = shoeRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(String.format("Shoe with ID - %s does not exist!", id)));
+        shoe.setName(shoeUpdateDto.getName());
+        shoe.setURL(shoeUpdateDto.getImageURL());
+        shoe.setMinSize(shoeUpdateDto.getMinSize());
+        shoe.setMaxSize(shoeUpdateDto.getMaxSize());
+        updateShoeBrandRelation(shoe, shoeUpdateDto.getBrandId());
+        updateShoeCategoryRelation(shoe, shoeUpdateDto.getCategoryIds());
         shoeRepository.save(shoe);
     }
 

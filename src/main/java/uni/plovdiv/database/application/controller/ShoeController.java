@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uni.plovdiv.database.application.dto.shoe.ShoeCreateDto;
 import uni.plovdiv.database.application.dto.shoe.ShoeGetDto;
+import uni.plovdiv.database.application.dto.shoe.ShoeUpdateDto;
 import uni.plovdiv.database.application.service.ShoeService;
 
 import java.util.List;
@@ -45,9 +46,10 @@ public class ShoeController {
 
     @PutMapping("/{id}")
     public void updateShoe(
-            @PathVariable Long id
+            @PathVariable Long id,
+            @RequestBody ShoeUpdateDto shoeUpdateDto
     ) {
-
+        shoeService.updateShoe(id, shoeUpdateDto);
     }
 
     @DeleteMapping("/{id}")

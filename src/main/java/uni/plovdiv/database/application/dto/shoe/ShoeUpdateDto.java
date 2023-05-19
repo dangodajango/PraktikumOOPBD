@@ -1,7 +1,12 @@
 package uni.plovdiv.database.application.dto.shoe;
 
+import lombok.Builder;
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
+@Builder
 public class ShoeUpdateDto {
 
     private String name;

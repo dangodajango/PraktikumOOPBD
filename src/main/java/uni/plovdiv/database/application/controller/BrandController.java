@@ -28,9 +28,9 @@ public class BrandController {
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     public List<BrandGetDto> getAllBrands(
-            @RequestParam(required = false) String title
+            @RequestParam(required = false) String name
     ) {
-        return brandService.getAllBrands(title);
+        return brandService.getAllBrands(name);
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)

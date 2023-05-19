@@ -9,6 +9,7 @@ import uni.plovdiv.database.application.models.Category;
 import uni.plovdiv.database.application.repositories.CategoryRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -18,19 +19,27 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryGetDto> getAllCategories() {
-        return categoryRepository.findAll().stream()
-                .map(category -> CategoryGetDto.builder()
-                        .id(category.getId())
-                        .title(category.getTitle())
-                        .description(category.getDescription())
-                        .build())
-                .toList();
+    public List<CategoryGetDto> getAllCategories(String title) {
+        if (Objects.isNull(title)) {
+            return categoryRepository.findAll()
+                    .stream()
+                    .map(category -> mapToCategoryGetDto(category.getId(), category))
+                    .toList();
+        } else {
+            return categoryRepository.getCategoryByTitle(title)
+                    .stream()
+                    .map(category -> mapToCategoryGetDto(category.getId(), category))
+                    .toList();
+        }
     }
 
     public CategoryGetDto getCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalStateException(String.format("Category with ID - %s does not exist", categoryId)));
+        return mapToCategoryGetDto(categoryId, category);
+    }
+
+    private CategoryGetDto mapToCategoryGetDto(Long categoryId, Category category) {
         return CategoryGetDto.builder()
                 .id(categoryId)
                 .title(category.getTitle())

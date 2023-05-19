@@ -12,7 +12,7 @@ import java.util.List;
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
     @Query(value = "SELECT * FROM BRAND " +
-            "WHERE title LIKE %:title% ",
+            "WHERE name LIKE %:name% ",
             nativeQuery = true)
-    List<Brand> getBrandByTitle(@Param("title") String title);
+    List<Brand> getBrandByTitle(@Param("name") String name);
 }

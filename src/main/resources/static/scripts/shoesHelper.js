@@ -24,7 +24,7 @@ const getShoeList = (filters = {}) => {
 
     for(let i = 0; i < shoeItems.length; i++) {
         shoeItems[i].addEventListener("click", () => {
-          window.location.href = "shoe?id=" + shoeItems[i].getAttribute('id');
+          window.location.href = "shoe?id=" + shoeItems[i].getAttribute('data-id');
         })
     }
     setResultsCount(shoes.length);
@@ -33,7 +33,7 @@ const getShoeList = (filters = {}) => {
 
 
 const renderShoeItem = (shoe) => {
-  return `<div class="shoeItem" id="${shoe.id}">
+  return `<div class="shoeItem" data-id="${shoe.id}">
     <div class="shoeItem--image" style="background-image: url(${shoe.imageURL})"></div>
     <div class="shoeItem--label">${shoe.name}</div>
     <div class="shoeItem--price">${shoe.price}lv</div>

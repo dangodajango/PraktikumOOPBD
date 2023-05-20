@@ -67,7 +67,7 @@ const getBrandsDropdown = (search, afterLoading) => {
 
 
 const renderBrandItem = (brand) => {
-  return `<div class="brandItem" id="${brand.id}">
+  return `<div class="brandItem" data-id="${brand.id}">
   <div>${brand.name}</div>
   <div class="note" data-id="${brand.id}">Click again to confirm delete</div>
    <div>

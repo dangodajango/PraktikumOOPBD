@@ -1,5 +1,5 @@
 import { getUrlWithParams } from "./filtersHelper.js";
-import { get, deleteConfirmed } from "./httpService.js";
+import { get, deleteConfirmed, handleError } from "./httpService.js";
 import { deleteOnClick, showErrors } from "./formsHelper.js";
 import { setResultsCount } from "./paginatorHelper.js";
 
@@ -22,7 +22,7 @@ const getCategoriesList = (filters = {}) => {
 
       for(let i = 0; i < editButtons.length; i++) {
         editButtons[i].addEventListener("click", () => {
-          window.location.href = "category?id=" + editButtons[i].getAttribute('id');
+          window.location.href = "category?id=" + editButtons[i].getAttribute('data-id');
         })
       }
 
@@ -47,7 +47,7 @@ const getCategoriesDropdown = (afterLoading) => {
   get('/categories/all').then(async (response) => {
     const categories = (await response.json());
 
-    if(categories.length === 0 && !search) {
+    if(categories.length === 0) {
         if(window.confirm("There are no categories. Please create a category first")) window.location.href = "category";
     }
 
@@ -65,9 +65,14 @@ const getCategoriesDropdown = (afterLoading) => {
 }
 
 const renderCategoryItem = (category) => {
-  return `<div class="categoryItem" id="${category.id}">
+console.log(category)
+  return `<div class="categoryItem" data-id="${category.id}">
   <div>${category.title}</div>
-  <div><button class="edit" id="${category.id}">Edit</button><button class="delete">Delete</button></div>
+  <div class="note" data-id="${category.id}">Click again to confirm delete</div>
+   <div>
+      <button class="edit" data-id="${category.id}">Edit</button>
+      <button class="delete" data-id="${category.id}">Delete</button>
+    </div>
   </div>`;
 }
 

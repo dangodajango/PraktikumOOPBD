@@ -29,8 +29,8 @@ public class ShoeService {
                 .stream()
                 .filter(shoe -> name == null || shoe.getName().contains(name))
                 .filter(shoe -> brandId == null || shoe.getBrand().getId().equals(brandId))
-                .filter(shoe -> minPrice == null || shoe.getPrice() > minPrice)
-                .filter(shoe -> maxPrice == null || shoe.getPrice() < maxPrice)
+                .filter(shoe -> minPrice == null || shoe.getPrice() >= minPrice)
+                .filter(shoe -> maxPrice == null || shoe.getPrice() <= maxPrice)
                 .map(this::mapToShoeGetDto)
                 .toList();
     }

@@ -9,6 +9,7 @@ import uni.plovdiv.database.application.models.Brand;
 import uni.plovdiv.database.application.repositories.BrandRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -18,19 +19,27 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
 
-    public List<BrandGetDto> getAllBrands() {
-        return brandRepository.findAll().stream()
-                .map(brand -> BrandGetDto.builder()
-                        .id(brand.getId())
-                        .name(brand.getName())
-                        .description(brand.getDescription())
-                        .build())
-                .toList();
+    public List<BrandGetDto> getAllBrands(String name) {
+        if (Objects.isNull(name)) {
+            return brandRepository.findAll()
+                    .stream()
+                    .map(this::mapToBrandGetDto)
+                    .toList();
+        } else {
+            return brandRepository.getBrandByTitle(name)
+                    .stream()
+                    .map((this::mapToBrandGetDto))
+                    .toList();
+        }
     }
 
     public BrandGetDto getBrandById(Long brandId) {
         Brand brand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new IllegalStateException(String.format("Brand with ID - %s does not exist", brandId)));
+        return mapToBrandGetDto(brand);
+    }
+
+    private BrandGetDto mapToBrandGetDto(Brand brand) {
         return BrandGetDto.builder()
                 .id(brand.getId())
                 .name(brand.getName())

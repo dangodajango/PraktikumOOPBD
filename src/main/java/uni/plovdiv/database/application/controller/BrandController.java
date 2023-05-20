@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uni.plovdiv.database.application.dto.brand.BrandCreateDto;
 import uni.plovdiv.database.application.dto.brand.BrandGetDto;
@@ -26,8 +27,10 @@ public class BrandController {
     private final BrandService brandService;
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
-    public List<BrandGetDto> getAllBrands() {
-        return brandService.getAllBrands();
+    public List<BrandGetDto> getAllBrands(
+            @RequestParam(required = false) String name
+    ) {
+        return brandService.getAllBrands(name);
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uni.plovdiv.database.application.dto.category.CategoryCreateDto;
 import uni.plovdiv.database.application.dto.category.CategoryGetDto;
@@ -26,8 +27,10 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
-    public List<CategoryGetDto> getAllCategories() {
-        return categoryService.getAllCategories();
+    public List<CategoryGetDto> getAllCategories(
+            @RequestParam(required = false) String title
+    ) {
+        return categoryService.getAllCategories(title);
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)

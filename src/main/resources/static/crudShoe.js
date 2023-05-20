@@ -59,7 +59,8 @@ if(id){
 
   getCategoriesDropdown(() => {
       for(let i = 0; i < shoe.categoryIds.length; i++){
-        document.querySelector(`#categoriesDropdown>option[value="${shoe.categoryIds[i]}"]`).selected = true;
+        const selectedOption = document.querySelector(`#categoriesDropdown>option[value="${shoe.categoryIds[i]}"]`);
+        if(selectedOption) selectedOption.selected = true;
       }
   });
 
@@ -77,7 +78,7 @@ else {
 }
 
 const redirectToShoes = () => {
-  //window.location.href = 'index';
+  window.location.href = 'index';
 }
 
 const validate = (data) => {

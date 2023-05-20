@@ -49,6 +49,10 @@ const getBrandsDropdown = (search, afterLoading) => {
   get('/brands/all').then(async (response) => {
     const brands = (await response.json());
 
+    if(brands.length === 0 && !search) {
+        if(window.confirm("There are no brands. Please create a brand first")) window.location.href = "brand";
+    }
+
     for(let i = 0; i < brands.length; i++){
         brandItems += `<option value="${brands[i].id}">${brands[i].name}</option>`;
     }

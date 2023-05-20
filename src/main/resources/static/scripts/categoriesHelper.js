@@ -46,9 +46,14 @@ const getCategoriesDropdown = (afterLoading) => {
 
   get('/categories/all').then(async (response) => {
     const categories = (await response.json());
-      for(let i = 0; i < categories.length; i++){
+
+    if(categories.length === 0 && !search) {
+        if(window.confirm("There are no categories. Please create a category first")) window.location.href = "category";
+    }
+
+    for(let i = 0; i < categories.length; i++){
         categoryItems += `<option value="${categories[i].id}">${categories[i].title}</option>`;
-      }
+    }
 
     document.getElementById("categoriesDropdown").innerHTML = categoryItems;
 

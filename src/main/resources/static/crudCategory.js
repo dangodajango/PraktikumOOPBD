@@ -1,16 +1,16 @@
-import { get, handleError, post, put } from "./scripts/httpService.js";
-import { showErrors } from "./scripts/formsHelper.js";
+import { get, deleteConfirmed, handleError, post, put } from "./scripts/httpService.js";
+import { deleteOnClick, showErrors } from "./scripts/formsHelper.js";
 
 const id = new URLSearchParams(window.location.search).get('id');
 
 if(id){
 
-  const response = await get('/' + id);
-  const category = (await response.json()).data;
+  const response = await get('/categories/' + id);
+  const category = (await response.json());
 
   console.log('fetched category', category);
 
-  document.getElementById("name").value = category.name;
+  document.getElementById("title").value = category.title;
   document.getElementById("description").value = category.description;
 }
 else {
@@ -23,7 +23,7 @@ const redirectToCategories = () => {
 
 const validate = (data) => {
   const errors = [];
-  if(data.name.length < 5) errors.push('name');
+  if(data.title.length < 5) errors.push('title');
   if(data.description.length < 5) errors.push('description');
 
   showErrors(errors);
@@ -32,7 +32,7 @@ const validate = (data) => {
 
 document.getElementById("save").addEventListener("click", () => {
   const newCategoryData = {
-    name: document.getElementById("name").value,
+    title: document.getElementById("title").value,
     description: document.getElementById("description").value
   }
 
@@ -42,12 +42,12 @@ document.getElementById("save").addEventListener("click", () => {
   console.log('is valid:', isValid);
   if(isValid){
     if(id){
-        put('/' + id, newCategoryData).then((data) => {
+        put('/categories/' + id, newCategoryData).then((data) => {
             redirectToCategories();
           }, handleError)
         }
     else {
-      post("/categories", newCategoryData).then((data) => {
+      post('/categories/create', newCategoryData).then((data) => {
         redirectToCategories();
       }, handleError)
     }

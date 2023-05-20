@@ -1,19 +1,18 @@
 import { getUrlWithParams } from "./filtersHelper.js";
-import { get, deleteConfirmed } from "./httpService.js";
+import { get, deleteConfirmed, handleError } from "./httpService.js";
 import { deleteOnClick, showErrors } from "./formsHelper.js";
 import { setResultsCount } from "./paginatorHelper.js";
 
 const getBrandsList = (filters = {}) => {
 
-  let brandItems = '';
-
-  const urlWithParams = getUrlWithParams('/brands', filters);
+  const urlWithParams = getUrlWithParams('/brands/all', filters);
 
   get(urlWithParams).then(async (response) => {
+  let brandItems = '';
     const brands = (await response.json());
 
     for(let i = 0; i < brands.length; i++){
-    brandItems += renderBrandItem(brands[i])
+        brandItems += renderBrandItem(brands[i])
     }
 
     document.getElementById("brandsList").innerHTML = brandItems;
@@ -22,8 +21,9 @@ const getBrandsList = (filters = {}) => {
       const editButtons = document.getElementsByClassName("edit");
 
       for(let i = 0; i < editButtons.length; i++) {
+        console.log(editButtons[i]);
         editButtons[i].addEventListener("click", () => {
-          window.location.href = "brands?id=" + editButtons[i].getAttribute("data-id");
+          window.location.href = "brand?id=" + editButtons[i].getAttribute("data-id");
         })
       }
 
@@ -32,7 +32,7 @@ const getBrandsList = (filters = {}) => {
     for(let i = 0; i < deleteButtons.length; i++) {
         const id = deleteButtons[i].getAttribute("data-id");
         deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
-          deleteConfirmed(`/${id}`).then((response) => {
+          deleteConfirmed(`/brands/${id}`).then((response) => {
             getBrandsList();
           }, handleError)
         }))
@@ -43,19 +43,22 @@ const getBrandsList = (filters = {}) => {
 }
 
 
-const getBrandsDropdown = (search) => {
+const getBrandsDropdown = (search, afterLoading) => {
   let brandItems = search ? '<option value="">All</option>' : '';
 
-  get('/brands').then(async (response) => {
-    const reponseJSON = (await response.json());
-    const brands = reponseJSON.data;
+  get('/brands/all').then(async (response) => {
+    const brands = (await response.json());
 
     for(let i = 0; i < brands.length; i++){
         brandItems += `<option value="${brands[i].id}">${brands[i].name}</option>`;
     }
 
     document.getElementById("brandsDropdown").innerHTML = brandItems;
-   });
+    // if there is passed a function that should execute after loading (selecting items in the dropdown for example)
+    if(afterLoading){
+      afterLoading();
+    }
+  });
 }
 
 

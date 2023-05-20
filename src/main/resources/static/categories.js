@@ -3,10 +3,10 @@ import { getCategoriesList } from "./scripts/categoriesHelper.js";
 getCategoriesList();
 
 document.getElementById("applyFilters").addEventListener("click", () => {
-  const nameSearch = document.getElementById("name").value;
+  const titleSearch = document.getElementById("title").value;
   const filters = {};
 
-  if(nameSearch != '') filters.name = nameSearch;
+  if(titleSearch != '') filters.title = titleSearch;
 
   getCategoriesList(filters)
 });

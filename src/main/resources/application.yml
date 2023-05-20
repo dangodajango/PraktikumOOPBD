@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:unidatabase
+#    url: jdbc:h2:mem:unidatabase
+    url: jdbc:h2:file:C:\Users\Elena\Documents\PraktikumOOPBD\db
     username: admin
     password: admin
     driverClassName: org.h2.Driver
@@ -8,7 +9,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     mvc:
       view:
         suffix: .html

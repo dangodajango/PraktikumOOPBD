@@ -1,10 +1,11 @@
 import { getUrlWithParams } from "./filtersHelper.js";
-import { get } from "./httpService.js";
+import { get, deleteConfirmed } from "./httpService.js";
+import { deleteOnClick, showErrors } from "./formsHelper.js";
 import { setResultsCount } from "./paginatorHelper.js";
 
 const getCategoriesList = (filters = {}) => {
 
-  const urlWithParams = getUrlWithParams('/categories', filters);
+  const urlWithParams = getUrlWithParams('/categories/all', filters);
 
   get(urlWithParams).then(async (response) => {
     const categories = (await response.json());
@@ -30,7 +31,7 @@ const getCategoriesList = (filters = {}) => {
         for(let i = 0; i < deleteButtons.length; i++) {
             const id = deleteButtons[i].getAttribute("data-id");
             deleteButtons[i].addEventListener("click", () => deleteOnClick(id, () => {
-              deleteConfirmed(`/${id}`).then((response) => {
+              deleteConfirmed(`/categories/${id}`).then((response) => {
                 getCategoriesList();
               }, handleError)
             }))
@@ -40,23 +41,27 @@ const getCategoriesList = (filters = {}) => {
     });
 }
 
-const getCategoriesDropdown = () => {
+const getCategoriesDropdown = (afterLoading) => {
   let categoryItems = '';
 
-  get('/categories').then(async (response) => {
-    const reponseJSON = (await response.json());
-    const categories = reponseJSON.data;
+  get('/categories/all').then(async (response) => {
+    const categories = (await response.json());
       for(let i = 0; i < categories.length; i++){
-        categoryItems += `<option value="${categories[i].id}">${categories[i].name}</option>`;
+        categoryItems += `<option value="${categories[i].id}">${categories[i].title}</option>`;
       }
 
     document.getElementById("categoriesDropdown").innerHTML = categoryItems;
+
+    // if there is passed a function that should execute after loading (selecting items in the dropdown for example)
+    if(afterLoading){
+      afterLoading();
+    }
   });
 }
 
 const renderCategoryItem = (category) => {
   return `<div class="categoryItem" id="${category.id}">
-  <div>${category.name}</div>
+  <div>${category.title}</div>
   <div><button class="edit" id="${category.id}">Edit</button><button class="delete">Delete</button></div>
   </div>`;
 }
